@@ -28,4 +28,4 @@ docker-compose up --build
 - Visit your app: http://localhost:8084
 - Redis is accessible inside Docker network at host redis:6379.
 ---
-*Done by Sak_shetty*
+<img width="1917" height="924" alt="Screenshot 2025-11-27 210753" src="https://github.com/user-attachments/assets/be246cbe-cb4b-4538-8e1d-951c69cdeb4f" />
