@@ -6,96 +6,102 @@
     <link rel="stylesheet" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
-<!-- ================= HEADER / HERO ================= -->
-<header class="header">
+<!-- Sidebar / Dashboard -->
+<aside class="sidebar glass-sidebar">
+    <h2 class="logo">Dashboard</h2>
+
+    <ul class="menu">
+        <li><a href="/">🏠 Home</a></li>
+        <li><a href="#add">➕ Add User</a></li>
+        <li><a href="#fetch">🔍 Fetch User</a></li>
+        <li><a href="#table">📄 All Users</a></li>
+        <li><a href="https://github.com/sareena_kashi" target="_blank">💻 GitHub</a></li>
+    </ul>
+</aside>
+
+
+<div class="content-area"> <!-- Everything moves right side -->
+
+<header class="header glass-header">
     <div class="header-content">
         <h1>Redis User Manager</h1>
-        <p class="subtitle">A clean & elegant user management dashboard</p>
-        <p class="dev">by <span>@sareena_kashi</span></p>
+        <p>Developed by <span>@sareena_kashi</span></p>
     </div>
 </header>
 
-<!-- ================= MAIN CONTENT ================= -->
-<main class="main">
+<main>
+    <div class="main-container">
 
-    <!-- ======= FEATURE ROW (NEW LAYOUT) ======= -->
-    <section class="feature-row">
-        
-        <!-- ADD USER CARD -->
-        <div class="glass-card tall">
-            <h2>Add New User</h2>
-            <p class="desc">Create a new user and store it in Redis instantly</p>
-
-            <form action="/save" method="post" class="form">
-                <input type="text" name="id" placeholder="Enter User ID" required>
-                <input type="text" name="name" placeholder="Enter User Name" required>
-                <button type="submit" class="btn btn-primary">Add User</button>
-            </form>
-        </div>
-
-        <!-- FETCH / DISPLAY USER -->
-        <div class="glass-card tall">
-            <h2>Search User</h2>
-            <p class="desc">Find user details using a Redis key</p>
-
-            <form action="/fetch" method="post" class="form">
-                <input type="text" name="id" placeholder="Enter User ID" required>
-                <button type="submit" class="btn btn-secondary">Search</button>
-            </form>
-
-            <div class="user-result" th:if="${user}">
-                <div class="user-box">
-                    <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
-                    <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
-                </div>
-
-                <form action="/delete" method="post">
-                    <input type="hidden" name="id" th:value="${user.id}">
-                    <button class="btn btn-danger">Delete User</button>
+        <!-- Add / Fetch Section -->
+        <section class="top-grid">
+            <!-- Add User -->
+            <div class="card glass-card" id="add">
+                <h2>Add User</h2>
+                <form action="/save" method="post">
+                    <input type="text" name="id" placeholder="User ID" required>
+                    <input type="text" name="name" placeholder="User Name" required>
+                    <button type="submit" class="btn btn-primary">Add</button>
                 </form>
             </div>
-        </div>
 
-    </section>
+            <!-- Fetch User -->
+            <div class="card glass-card" id="fetch">
+                <h2>Fetch User</h2>
+                <form action="/fetch" method="post">
+                    <input type="text" name="id" placeholder="Enter User ID" required>
+                    <button type="submit" class="btn btn-secondary">Fetch</button>
+                </form>
 
-    <!-- ======= MESSAGE AREA ======= -->
-    <section class="message-area">
-        <div class="msg success" th:if="${successMessage}" th:text="${successMessage}"></div>
-        <div class="msg error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-    </section>
+                <div class="user-info glass-info" th:if="${user}">
+                    <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+                    <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+                    <form action="/delete" method="post">
+                        <input type="hidden" name="id" th:value="${user.id}">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </section>
 
-    <!-- ======= ALL USERS TABLE ======= -->
-    <section class="table-section" th:if="${allUsers}">
-        <div class="table-header">
-            <h2>All Registered Users</h2>
-        </div>
+        <!-- Messages -->
+        <section class="messages">
+            <div class="msg success glass-msg" th:if="${successMessage}" th:text="${successMessage}"></div>
+            <div class="msg error glass-msg" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+        </section>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>User Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="user : ${allUsers}">
-                        <td th:text="${user.id}"></td>
-                        <td th:text="${user.name}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </section>
+        <!-- All Users Table -->
+        <section class="table-section" id="table" th:if="${allUsers}">
+            <h2>All Users</h2>
+            <div class="table-container glass-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>User Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${allUsers}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.name}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
+    </div>
 </main>
 
-<!-- ================= FOOTER ================= -->
-<footer class="footer">
-    <p>© 2025 • Redis User Manager • Built by @sareena_kashi</p>
+<footer class="footer glass-footer">
+    <p>© 2025 @sareena_kashi | Redis User Manager</p>
 </footer>
+
+</div> <!-- content-area ends -->
+
 
 <script>
   window.addEventListener('DOMContentLoaded', () => {
