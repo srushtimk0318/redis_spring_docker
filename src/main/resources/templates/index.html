@@ -7,75 +7,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body>
+<body class="neo-body">
 
-<!-- Sidebar / Dashboard -->
-<aside class="sidebar glass-sidebar">
-    <h2 class="logo">Dashboard</h2>
+<!-- 🌐 Futuristic Sidebar -->
+<aside class="sidebar glass-sidebar neon-border">
+    <div class="brand-box">
+        <h2 class="logo">⚡ Redis Panel</h2>
+        <p class="tag">@sareena_kashi</p>
+    </div>
 
     <ul class="menu">
-        <li><a href="/">🏠 Home</a></li>
-        <li><a href="#add">➕ Add User</a></li>
-        <li><a href="#fetch">🔍 Fetch User</a></li>
-        <li><a href="#table">📄 All Users</a></li>
-        <li><a href="https://github.com/sareena_kashi" target="_blank">💻 GitHub</a></li>
+        <li><a href="/" class="menu-link">🏠 Dashboard</a></li>
+        <li><a href="#add" class="menu-link">➕ Add User</a></li>
+        <li><a href="#fetch" class="menu-link">🔍 Fetch User</a></li>
+        <li><a href="#table" class="menu-link">📄 View All</a></li>
+        <li><a href="https://github.com/sareena_kashi" target="_blank" class="menu-link">💻 GitHub</a></li>
     </ul>
 </aside>
 
 
-<div class="content-area"> <!-- Everything moves right side -->
+<!-- MAIN CONTENT AREA -->
+<div class="content-area">
 
-<header class="header glass-header">
+<header class="header glass-header neon-text">
     <div class="header-content">
         <h1>Redis User Manager</h1>
-        <p>Developed by <span>@sareena_kashi</span></p>
+        <p>Powerful • Fast • Minimal • Gen-Z UI</p>
     </div>
 </header>
 
 <main>
     <div class="main-container">
 
-        <!-- Add / Fetch Section -->
+        <!-- Section Title -->
+        <div class="section-title">
+            <h2>⚙ User Operations</h2>
+        </div>
+
+        <!-- Add + Fetch Section -->
         <section class="top-grid">
+
             <!-- Add User -->
-            <div class="card glass-card" id="add">
-                <h2>Add User</h2>
-                <form action="/save" method="post">
-                    <input type="text" name="id" placeholder="User ID" required>
-                    <input type="text" name="name" placeholder="User Name" required>
-                    <button type="submit" class="btn btn-primary">Add</button>
+            <div class="card glass-card neo-card" id="add">
+                <h2 class="card-title">➕ Add New User</h2>
+
+                <form action="/save" method="post" class="neo-form">
+                    <input type="text" name="id" placeholder="Enter User ID" required>
+                    <input type="text" name="name" placeholder="Enter User Name" required>
+                    <button type="submit" class="btn neon-btn-primary">Add User</button>
                 </form>
             </div>
 
             <!-- Fetch User -->
-            <div class="card glass-card" id="fetch">
-                <h2>Fetch User</h2>
-                <form action="/fetch" method="post">
-                    <input type="text" name="id" placeholder="Enter User ID" required>
-                    <button type="submit" class="btn btn-secondary">Fetch</button>
+            <div class="card glass-card neo-card" id="fetch">
+                <h2 class="card-title">🔍 Fetch User</h2>
+
+                <form action="/fetch" method="post" class="neo-form">
+                    <input type="text" name="id" placeholder="Search User ID" required>
+                    <button type="submit" class="btn neon-btn-secondary">Fetch</button>
                 </form>
 
-                <div class="user-info glass-info" th:if="${user}">
+                <div class="user-info glass-info neo-info" th:if="${user}">
                     <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
                     <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+
                     <form action="/delete" method="post">
                         <input type="hidden" name="id" th:value="${user.id}">
-                        <button class="btn btn-danger">Delete</button>
+                        <button class="btn neon-btn-danger">Delete</button>
                     </form>
                 </div>
             </div>
+
         </section>
 
         <!-- Messages -->
         <section class="messages">
-            <div class="msg success glass-msg" th:if="${successMessage}" th:text="${successMessage}"></div>
-            <div class="msg error glass-msg" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+            <div class="msg success glass-msg neon-success" th:if="${successMessage}" th:text="${successMessage}"></div>
+            <div class="msg error glass-msg neon-error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
         </section>
 
+
         <!-- All Users Table -->
+        <div class="section-title">
+            <h2>📄 All Registered Users</h2>
+        </div>
+
         <section class="table-section" id="table" th:if="${allUsers}">
-            <h2>All Users</h2>
-            <div class="table-container glass-table">
+            <div class="table-container glass-table neo-table">
                 <table>
                     <thead>
                         <tr>
@@ -96,21 +114,14 @@
     </div>
 </main>
 
-<footer class="footer glass-footer">
-    <p>© 2025 @sareena_kashi | Redis User Manager</p>
+<footer class="footer glass-footer neon-footer">
+    <p>© 2025 • Redis User Manager • Designed by @sareena_kashi</p>
 </footer>
 
-</div> <!-- content-area ends -->
+</div> <!-- content-area -->
 
 
+<!-- Message fade animation -->
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    const msgs = document.querySelectorAll('.msg');
-    msgs.forEach(m => {
-      setTimeout(() => m.classList.add('fade'), 3000);
-    });
-  });
-</script>
-
-</body>
-</html>
+    const msgs =
