@@ -6,122 +6,105 @@
     <link rel="stylesheet" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+<body>
 
-<body class="neo-body">
-
-<!-- 🌐 Futuristic Sidebar -->
-<aside class="sidebar glass-sidebar neon-border">
-    <div class="brand-box">
-        <h2 class="logo">⚡ Redis Panel</h2>
-        <p class="tag">@sareena_kashi</p>
-    </div>
-
-    <ul class="menu">
-        <li><a href="/" class="menu-link">🏠 Dashboard</a></li>
-        <li><a href="#add" class="menu-link">➕ Add User</a></li>
-        <li><a href="#fetch" class="menu-link">🔍 Fetch User</a></li>
-        <li><a href="#table" class="menu-link">📄 View All</a></li>
-        <li><a href="https://github.com/sareena_kashi" target="_blank" class="menu-link">💻 GitHub</a></li>
-    </ul>
-</aside>
-
-
-<!-- MAIN CONTENT AREA -->
-<div class="content-area">
-
-<header class="header glass-header neon-text">
+<!-- ================= HEADER / HERO ================= -->
+<header class="header">
     <div class="header-content">
         <h1>Redis User Manager</h1>
-        <p>Powerful • Fast • Minimal • Gen-Z UI</p>
+        <p class="subtitle">A clean & elegant user management dashboard</p>
+        <p class="dev">by <span>@sareena_kashi</span></p>
     </div>
 </header>
 
-<main>
-    <div class="main-container">
+<!-- ================= MAIN CONTENT ================= -->
+<main class="main">
 
-        <!-- Section Title -->
-        <div class="section-title">
-            <h2>⚙ User Operations</h2>
+    <!-- ======= FEATURE ROW (NEW LAYOUT) ======= -->
+    <section class="feature-row">
+        
+        <!-- ADD USER CARD -->
+        <div class="glass-card tall">
+            <h2>Add New User</h2>
+            <p class="desc">Create a new user and store it in Redis instantly</p>
+
+            <form action="/save" method="post" class="form">
+                <input type="text" name="id" placeholder="Enter User ID" required>
+                <input type="text" name="name" placeholder="Enter User Name" required>
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </form>
         </div>
 
-        <!-- Add + Fetch Section -->
-        <section class="top-grid">
+        <!-- FETCH / DISPLAY USER -->
+        <div class="glass-card tall">
+            <h2>Search User</h2>
+            <p class="desc">Find user details using a Redis key</p>
 
-            <!-- Add User -->
-            <div class="card glass-card neo-card" id="add">
-                <h2 class="card-title">➕ Add New User</h2>
+            <form action="/fetch" method="post" class="form">
+                <input type="text" name="id" placeholder="Enter User ID" required>
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
 
-                <form action="/save" method="post" class="neo-form">
-                    <input type="text" name="id" placeholder="Enter User ID" required>
-                    <input type="text" name="name" placeholder="Enter User Name" required>
-                    <button type="submit" class="btn neon-btn-primary">Add User</button>
-                </form>
-            </div>
-
-            <!-- Fetch User -->
-            <div class="card glass-card neo-card" id="fetch">
-                <h2 class="card-title">🔍 Fetch User</h2>
-
-                <form action="/fetch" method="post" class="neo-form">
-                    <input type="text" name="id" placeholder="Search User ID" required>
-                    <button type="submit" class="btn neon-btn-secondary">Fetch</button>
-                </form>
-
-                <div class="user-info glass-info neo-info" th:if="${user}">
+            <div class="user-result" th:if="${user}">
+                <div class="user-box">
                     <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
                     <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
-
-                    <form action="/delete" method="post">
-                        <input type="hidden" name="id" th:value="${user.id}">
-                        <button class="btn neon-btn-danger">Delete</button>
-                    </form>
                 </div>
+
+                <form action="/delete" method="post">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <button class="btn btn-danger">Delete User</button>
+                </form>
             </div>
-
-        </section>
-
-        <!-- Messages -->
-        <section class="messages">
-            <div class="msg success glass-msg neon-success" th:if="${successMessage}" th:text="${successMessage}"></div>
-            <div class="msg error glass-msg neon-error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-        </section>
-
-
-        <!-- All Users Table -->
-        <div class="section-title">
-            <h2>📄 All Registered Users</h2>
         </div>
 
-        <section class="table-section" id="table" th:if="${allUsers}">
-            <div class="table-container glass-table neo-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>User Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="user : ${allUsers}">
-                            <td th:text="${user.id}"></td>
-                            <td th:text="${user.name}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    </section>
 
-    </div>
+    <!-- ======= MESSAGE AREA ======= -->
+    <section class="message-area">
+        <div class="msg success" th:if="${successMessage}" th:text="${successMessage}"></div>
+        <div class="msg error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    </section>
+
+    <!-- ======= ALL USERS TABLE ======= -->
+    <section class="table-section" th:if="${allUsers}">
+        <div class="table-header">
+            <h2>All Registered Users</h2>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${allUsers}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.name}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
 </main>
 
-<footer class="footer glass-footer neon-footer">
-    <p>© 2025 • Redis User Manager • Designed by @sareena_kashi</p>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <p>© 2025 • Redis User Manager • Built by @sareena_kashi</p>
 </footer>
 
-</div> <!-- content-area -->
-
-
-<!-- Message fade animation -->
 <script>
   window.addEventListener('DOMContentLoaded', () => {
-    const msgs =
+    const msgs = document.querySelectorAll('.msg');
+    msgs.forEach(m => {
+      setTimeout(() => m.classList.add('fade'), 3000);
+    });
+  });
+</script>
+
+</body>
+</html>
