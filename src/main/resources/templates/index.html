@@ -6,82 +6,95 @@
     <link rel="stylesheet" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-
 <body>
 
-<header class="header glass-header">
+<!-- ================= HEADER / HERO ================= -->
+<header class="header">
     <div class="header-content">
         <h1>Redis User Manager</h1>
-        <p>Developed by <span>@sareena_kashi</span></p>
+        <p class="subtitle">A clean & elegant user management dashboard</p>
+        <p class="dev">by <span>@sareena_kashi</span></p>
     </div>
 </header>
 
-<main>
-    <div class="main-container">
+<!-- ================= MAIN CONTENT ================= -->
+<main class="main">
 
-        <!-- Add / Fetch Section -->
-        <section class="top-grid">
-            <!-- Add User -->
-            <div class="card glass-card">
-                <h2>Add User</h2>
-                <form action="/save" method="post">
-                    <input type="text" name="id" placeholder="User ID" required>
-                    <input type="text" name="name" placeholder="User Name" required>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </form>
-            </div>
+    <!-- ======= FEATURE ROW (NEW LAYOUT) ======= -->
+    <section class="feature-row">
+        
+        <!-- ADD USER CARD -->
+        <div class="glass-card tall">
+            <h2>Add New User</h2>
+            <p class="desc">Create a new user and store it in Redis instantly</p>
 
-            <!-- Fetch User -->
-            <div class="card glass-card">
-                <h2>Fetch User</h2>
-                <form action="/fetch" method="post">
-                    <input type="text" name="id" placeholder="Enter User ID" required>
-                    <button type="submit" class="btn btn-secondary">Fetch</button>
-                </form>
+            <form action="/save" method="post" class="form">
+                <input type="text" name="id" placeholder="Enter User ID" required>
+                <input type="text" name="name" placeholder="Enter User Name" required>
+                <button type="submit" class="btn btn-primary">Add User</button>
+            </form>
+        </div>
 
-                <div class="user-info glass-info" th:if="${user}">
+        <!-- FETCH / DISPLAY USER -->
+        <div class="glass-card tall">
+            <h2>Search User</h2>
+            <p class="desc">Find user details using a Redis key</p>
+
+            <form action="/fetch" method="post" class="form">
+                <input type="text" name="id" placeholder="Enter User ID" required>
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
+
+            <div class="user-result" th:if="${user}">
+                <div class="user-box">
                     <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
                     <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
-                    <form action="/delete" method="post">
-                        <input type="hidden" name="id" th:value="${user.id}">
-                        <button class="btn btn-danger">Delete</button>
-                    </form>
                 </div>
+
+                <form action="/delete" method="post">
+                    <input type="hidden" name="id" th:value="${user.id}">
+                    <button class="btn btn-danger">Delete User</button>
+                </form>
             </div>
-        </section>
+        </div>
 
-        <!-- Messages -->
-        <section class="messages">
-            <div class="msg success glass-msg" th:if="${successMessage}" th:text="${successMessage}"></div>
-            <div class="msg error glass-msg" th:if="${errorMessage}" th:text="${errorMessage}"></div>
-        </section>
+    </section>
 
-        <!-- All Users Table -->
-        <section class="table-section" th:if="${allUsers}">
-            <h2>All Users</h2>
-            <div class="table-container glass-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>User Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="user : ${allUsers}">
-                            <td th:text="${user.id}"></td>
-                            <td th:text="${user.name}"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    <!-- ======= MESSAGE AREA ======= -->
+    <section class="message-area">
+        <div class="msg success" th:if="${successMessage}" th:text="${successMessage}"></div>
+        <div class="msg error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+    </section>
 
-    </div>
+    <!-- ======= ALL USERS TABLE ======= -->
+    <section class="table-section" th:if="${allUsers}">
+        <div class="table-header">
+            <h2>All Registered Users</h2>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${allUsers}">
+                        <td th:text="${user.id}"></td>
+                        <td th:text="${user.name}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
 </main>
 
-<footer class="footer glass-footer">
-    <p>© 2025 @sareena_kashi | Redis User Manager</p>
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <p>© 2025 • Redis User Manager • Built by @sareena_kashi</p>
 </footer>
 
 <script>
