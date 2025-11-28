@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/srushtimk0318/springboot-redis-demo-sak.git'
+                    url: 'https://github.com/srushtimk0318/redis_spring_docker.git'
             }
         }
 
