@@ -6,9 +6,10 @@
     <link rel="stylesheet" href="/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
-<header class="header">
+<header class="header glass-header">
     <div class="header-content">
         <h1>Redis User Manager</h1>
         <p>Developed by <span>@sareena_kashi</span></p>
@@ -21,7 +22,7 @@
         <!-- Add / Fetch Section -->
         <section class="top-grid">
             <!-- Add User -->
-            <div class="card">
+            <div class="card glass-card">
                 <h2>Add User</h2>
                 <form action="/save" method="post">
                     <input type="text" name="id" placeholder="User ID" required>
@@ -31,14 +32,14 @@
             </div>
 
             <!-- Fetch User -->
-            <div class="card">
+            <div class="card glass-card">
                 <h2>Fetch User</h2>
                 <form action="/fetch" method="post">
                     <input type="text" name="id" placeholder="Enter User ID" required>
                     <button type="submit" class="btn btn-secondary">Fetch</button>
                 </form>
 
-                <div class="user-info" th:if="${user}">
+                <div class="user-info glass-info" th:if="${user}">
                     <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
                     <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
                     <form action="/delete" method="post">
@@ -51,14 +52,14 @@
 
         <!-- Messages -->
         <section class="messages">
-            <div class="msg success" th:if="${successMessage}" th:text="${successMessage}"></div>
-            <div class="msg error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+            <div class="msg success glass-msg" th:if="${successMessage}" th:text="${successMessage}"></div>
+            <div class="msg error glass-msg" th:if="${errorMessage}" th:text="${errorMessage}"></div>
         </section>
 
         <!-- All Users Table -->
         <section class="table-section" th:if="${allUsers}">
             <h2>All Users</h2>
-            <div class="table-container">
+            <div class="table-container glass-table">
                 <table>
                     <thead>
                         <tr>
@@ -79,7 +80,7 @@
     </div>
 </main>
 
-<footer class="footer">
+<footer class="footer glass-footer">
     <p>© 2025 @sareena_kashi | Redis User Manager</p>
 </footer>
 
